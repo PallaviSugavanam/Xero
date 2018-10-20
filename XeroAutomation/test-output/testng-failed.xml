@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite guice-stage="DEVELOPMENT" name="Failed suite [Default suite]">
+  <test thread-count="5" name="Default test(failed)">
+    <classes>
+      <class name="TestScripts.XeroDriverTest">
+        <methods>
+          <include name="SignUp_To_XDC_B"/>
+          <include name="Test_Logout_Functionality"/>
+          <include name="Navigate_to_XERO1"/>
+          <include name="SignUp_To_XDC_C"/>
+          <include name="Navigate_to_XERO"/>
+          <include name="SignUp_To_XDC_D"/>
+          <include name="Incorrect_Password"/>
+          <include name="SignUp_To_XDC_A"/>
+          <include name="mainmethod"/>
+          <include name="SignUp_To_XDC_E"/>
+          <include name="Test_All_Tabs"/>
+          <include name="Incorrect_Email"/>
+        </methods>
+      </class> <!-- TestScripts.XeroDriverTest -->
+    </classes>
+  </test> <!-- Default test(failed) -->
+</suite> <!-- Failed suite [Default suite] -->
