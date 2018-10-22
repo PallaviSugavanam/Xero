@@ -29,6 +29,9 @@ public class XeroDriverTest extends XeroApplication {
 					
 				}
 		}
+/*	testCase=testSuiteData[i][0];
+	   Method ts=XeroApplication.class.getMethod(testCase);
+		ts.invoke(ts);*/
 
 		extent.flush();
 	}
