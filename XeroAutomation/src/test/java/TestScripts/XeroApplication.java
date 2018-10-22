@@ -1,5 +1,6 @@
 package TestScripts;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -7,6 +8,7 @@ import java.util.Properties;
 import java.util.Set;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.annotations.Test;
@@ -16,6 +18,7 @@ import com.aventstack.extentreports.markuputils.ExtentColor;
 import com.aventstack.extentreports.markuputils.MarkupHelper;
 
 import Modules.LoginModule;
+import Modules.MyXeroModule;
 
 public class XeroApplication extends XeroReusableMethods{
 
@@ -376,9 +379,17 @@ closeDriver();
 			clickObj(accounts, "The Accounts ");
 			logger.log(Status.PASS, MarkupHelper.createLabel("Pass:The Account Page Dropdown is opened", ExtentColor.GREEN));
 			
-			WebElement payroll=driver.findElement(getLocator("Xero.HomePage.Payroll",objpro));
+		/*	WebElement payroll=driver.findElement(getLocator("Xero.HomePage.Payroll",objpro));
 			clickObj(payroll, "The Payroll ");
-			logger.log(Status.PASS, MarkupHelper.createLabel("Pass:The Payroll Page Dropdown is opened", ExtentColor.GREEN));
+			/*logger.log(Status.PASS, MarkupHelper.createLabel("Pass:The Payroll Page Dropdown is opened", ExtentColor.GREEN));
+			WebElement payrollDisplay=driver.findElement(getLocator("Xero.HomePage.Payroll.Display",objpro));
+			if(payrollDisplay.isDisplayed()) {
+				logger.log(Status.PASS, MarkupHelper.createLabel("Pass:The Payroll Page Dropdown is opened", ExtentColor.GREEN));				
+			}
+			else {
+				logger.log(Status.FAIL, MarkupHelper.createLabel("Pass:The Payroll Page Dropdown is  not opened", ExtentColor.GREEN));				
+
+			}*/
 	
 			WebElement Projects=driver.findElement(getLocator("Xero.HomePage.Projects",objpro));
 			clickObj(Projects, "The Projects ");
@@ -387,7 +398,7 @@ closeDriver();
 			WebElement Reports=driver.findElement(getLocator("Xero.HomePage.Reports",objpro));
 			clickObj(Reports, "The Reports ");
 			logger.log(Status.PASS, MarkupHelper.createLabel("Pass:The Reports Page Dropdown is opened", ExtentColor.GREEN));
-			
+			Thread.sleep(2000);
 			WebElement Contacts=driver.findElement(getLocator("Xero.HomePage.Contacts",objpro));
 			clickObj(Contacts, "The Contacts ");
 			logger.log(Status.PASS, MarkupHelper.createLabel("Pass:The Contacts Page Dropdown is opened", ExtentColor.GREEN));
@@ -450,7 +461,7 @@ checkGetTitle(objpro.getProperty("Xero.LoginPage.LoginTitle"), "The Login ");
 	closeDriver();	
 
 }
-
+@Test
 public static void Upload_Profile_Window() throws Exception  {
 
 String curDir=System.getProperty("user.dir");
@@ -463,8 +474,7 @@ launchBrowser("firefox");
 launchApplication(pro.getProperty("XeroUrl"), "Xero ");
 checkGetTitle(objpro.getProperty("Xero.LoginPage.LoginTitle"), "The Login ");
 
- LoginModule l=new LoginModule();
-	l.login(driver);
+
 
 	WebElement userDropDown=driver.findElement(getLocator("Xero.HomePage.Userdropdown",objpro));
 	List<WebElement> list=driver.findElements(getLocator("Xero.HomePage.ListOfUserdropdown", objpro));
@@ -480,6 +490,119 @@ checkGetTitle(objpro.getProperty("Xero.LoginPage.LoginTitle"), "The Login ");
 
 	closeDriver();	
 
+}
+@Test
+public static void Add_another_organization_Trail_version_1() throws Exception {
+
+String curDir=System.getProperty("user.dir");
+Properties pro=loadProperty(curDir+"./src/test/resources/Utility/config.Properties");
+Properties objpro=loadProperty(curDir+"./src/test/resources/Utility/XeroObjectRepository.properties");	
+CreateReport("Add_another_organization_Trail_version_1");			;         
+	
+launchBrowser("firefox");			   
+	    
+launchApplication(pro.getProperty("XeroUrl"), "Xero ");
+Thread.sleep(2000);
+System.out.println(driver.getTitle());
+
+Thread.sleep(2000);
+
+MyXeroModule l=new MyXeroModule();
+l.MyXero(driver);
+
+WebElement startTrial=driver.findElement(getLocator("Xero.Organisation.StartTrial", objpro));
+clickObj(startTrial, "Start Trial");
+
+closeDriver();
+}
+@Test
+public static void Add_another_organization_StandardVersion() throws Exception {
+	String curDir=System.getProperty("user.dir");
+	Properties pro=loadProperty(curDir+"./src/test/resources/Utility/config.Properties");
+	Properties objpro=loadProperty(curDir+"./src/test/resources/Utility/XeroObjectRepository.properties");	
+    CreateReport("Add_another_organization_StandardVersion");			;         
+	//String expectedErrorText="Please check";	
+    launchBrowser("firefox");			   
+		    
+	launchApplication(pro.getProperty("XeroUrl"), "Xero ");
+	checkGetTitle(objpro.getProperty("Xero.LoginPage.LoginTitle"), "The Login ");
+
+MyXeroModule l=new MyXeroModule();
+l.MyXero(driver);
+
+
+WebElement BuyNow=driver.findElement(getLocator("Xero.Organisation.BuyNow", objpro));
+clickObj(BuyNow, "Buy Now ");
+System.out.println(driver.getTitle());
+WebElement Starter=driver.findElement(getLocator("Xero.Organisation.Starter", objpro));
+clickObj(Starter, "Starter  ");
+
+WebElement Continue=driver.findElement(getLocator("Xero.Organisation.Continue", objpro));
+clickObj(Continue, "Continue  ");
+
+WebElement Street=driver.findElement(getLocator("Xero.Organisation.Street", objpro));
+enterText(Street, objpro.getProperty("Xero.Organisation.StreetText"), "Street");
+
+WebElement Town=driver.findElement(getLocator("Xero.Organisation.Town", objpro));
+enterText(Town, objpro.getProperty("Xero.Organisation.TownText"), "Town");
+
+WebElement State=driver.findElement(getLocator("Xero.Organisation.State", objpro));
+clickObj(State, "State  ");
+
+WebElement California=driver.findElement(getLocator("Xero.Organisation.California", objpro));
+clickObj(California, "California  ");
+WebElement Zipcode=driver.findElement(getLocator("Xero.Organisation.ZipCode", objpro));
+enterText(Zipcode, objpro.getProperty("Xero.Organisation.Zipcode"), "Zipcode");
+
+WebElement Continue1=driver.findElement(getLocator("Xero.Organisation.Continue1", objpro));
+clickObj(Continue1, "Continue  ");
+WebElement VerifyAddress=driver.findElement(getLocator("Xero.Organisation.VerifyAddress", objpro));
+verifyText(VerifyAddress, "Address", objpro.getProperty("Xero.Organisation.VerifyText"));
+
+
+
+//7.Enter valid Billing contact street, valid city , valid state, valid zipcode
+closeDriver();
+}
+@Test
+public static void Add_another_organization_with_current_Quickbooks_user() throws Exception {
+	String curDir=System.getProperty("user.dir");
+	Properties pro=loadProperty(curDir+"./src/test/resources/Utility/config.Properties");
+	Properties objpro=loadProperty(curDir+"./src/test/resources/Utility/XeroObjectRepository.properties");	
+    CreateReport("Add_another_organization_with_current_Quickbooks_user");			;         
+	//String expectedErrorText="Please check";	
+    launchBrowser("firefox");			   
+		    
+	launchApplication(pro.getProperty("XeroUrl"), "Xero ");
+	checkGetTitle(objpro.getProperty("Xero.LoginPage.LoginTitle"), "The Login ");
+	
+
+MyXeroModule l=new MyXeroModule();
+l.MyXero(driver);
+
+WebElement convert=driver.findElement(getLocator("Xero.Organisation.ConvertQuickbook", objpro));
+clickObj(convert, "convert  ");
+WebElement convert1=driver.findElement(getLocator("Xero.Organisation.ConvertQuickbook1", objpro));
+clickObj(convert1, "convert  ");
+WebElement StartTrail1=driver.findElement(getLocator("Xero.Organisation.QuickbookStartTrail", objpro));
+if(!StartTrail1.isEnabled()) {
+	logger.log(Status.PASS, MarkupHelper.createLabel("Start trail is not enabled", ExtentColor.GREEN));
+}
+else {
+	logger.log(Status.FAIL,MarkupHelper.createLabel("Start Trail is enabled", ExtentColor.RED));
+}
+
+WebElement Continue2=driver.findElement(getLocator("Xero.Organisation.QuickbookContinue", objpro));
+if(Continue2.isEnabled()) {
+	logger.log(Status.PASS, MarkupHelper.createLabel("Continue is Enabled enabled", ExtentColor.GREEN));
+}
+else {
+	logger.log(Status.FAIL,MarkupHelper.createLabel("Continue is not enabled", ExtentColor.RED));
+}
+
+clickObj(Continue2, "Continue");
+WebElement FileConversion=driver.findElement(getLocator("Xero.Organisation.FileConversion", objpro));
+verifyText(FileConversion, "FileConversion", "Quick books file conversion"	);
 }
 
 

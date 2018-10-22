@@ -36,7 +36,6 @@ public class XeroReusableMethods extends XeroBaseClass {
 	//static ExtentTest logger=null;
 	
 	public static String[][] readxlData(String path,String sheetName) throws IOException{
-		
 		FileInputStream fs=new FileInputStream(new File(path));
 		HSSFWorkbook workbook=new HSSFWorkbook(fs);
 		HSSFSheet sheet=workbook.getSheet(sheetName);
@@ -56,7 +55,6 @@ public class XeroReusableMethods extends XeroBaseClass {
 		}
 		return data;
 	}
-	
 	public static void launchApplication(String url,String urlName) {
 		driver.manage().timeouts().implicitlyWait(20,TimeUnit.SECONDS);
 		driver.get(url);
@@ -66,10 +64,8 @@ public class XeroReusableMethods extends XeroBaseClass {
 	
 	public static void CreateReport(String testCaseName) {
 		logger = extent.createTest(testCaseName);
-		logger.log(Status.PASS, MarkupHelper.createLabel("TestReport for "+testCaseName, ExtentColor.BLUE));
 		System.out.println("Test Case for "+testCaseName);
 	}
-	
 	public static By getLocator(String strElement,Properties propertyFile) throws Exception {
         
         // retrieve the specified object from the object list
@@ -413,7 +409,7 @@ return pro;
 	else if(methodType.equals("text")){
 		select.selectByVisibleText(value2);
 	}
-	else {
+	else  if(methodType.equals("index")){
 		Integer in=Integer.parseInt(value2);
 		select.selectByIndex(in);
 	}
@@ -436,8 +432,15 @@ else {
 }
 	
 }
+	public static void IsDisplayed(WebElement name) {
+		if(name.isDisplayed()) {
+			logger.log(Status.PASS, MarkupHelper.createLabel("Pass:The Organisation Detail is displayed", ExtentColor.GREEN));
+		}else {	
+		logger.log(Status.FAIL, MarkupHelper.createLabel("Pass:The Organisation Detail is  NOT displayed", ExtentColor.RED));
+		}
 	
 	
+}
 }
 
 
